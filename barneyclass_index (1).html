@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ATL BarneyClass · April 2026</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --ink:     #0f0e0c;
+      --paper:   #f5f0e8;
+      --gold:    #c8922a;
+      --gold-lt: #e8b84b;
+      --cream:   #faf7f2;
+      --muted:   #7a7268;
+      --border:  #d8d0c0;
+      --error:   #8b3a2a;
+    }
+    body {
+      background: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      color: var(--ink);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-bottom: 72px;
+    }
+    .hero {
+      width: 100%;
+      background: var(--ink);
+      padding: 52px 24px 44px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(200,146,42,0.2) 0%, transparent 68%);
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 18px;
+    }
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: clamp(42px, 11vw, 80px);
+      color: var(--paper);
+      line-height: 0.92;
+      margin-bottom: 6px;
+    }
+    .hero-title em {
+      color: var(--gold-lt);
+      font-style: italic;
+      font-weight: 700;
+    }
+    .hero-sub {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      margin-top: 20px;
+    }
+    .hero-rule {
+      width: 48px;
+      height: 2px;
+      background: var(--gold);
+      margin: 24px auto 0;
+    }
+    .card {
+      background: var(--cream);
+      width: min(560px, 94vw);
+      border-radius: 2px;
+      padding: 40px 36px 48px;
+    }
+    @media (max-width: 480px) { .card { padding: 30px 20px 40px; } }
+    .card-intro {
+      font-size: 14px;
+      line-height: 1.75;
+      color: var(--muted);
+      margin-bottom: 34px;
+      padding-bottom: 26px;
+      border-bottom: 1px solid var(--border);
+    }
+    .card-intro strong { color: var(--ink); font-weight: 500; }
+    .section-label {
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 18px;
+      margin-top: 30px;
+    }
+    .section-label:first-of-type { margin-top: 0; }
+    .field { margin-bottom: 18px; }
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+    label .opt { font-weight: 300; color: var(--muted); font-size: 11px; letter-spacing: 0; }
+    label .req { color: var(--gold); margin-left: 2px; }
+    input[type="text"], input[type="email"], input[type="tel"], select, textarea {
+      width: 100%;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 12px 14px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--ink);
+      transition: border-color 0.2s, box-shadow 0.2s;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(200,146,42,0.12);
+    }
+    input.error, select.error, textarea.error { border-color: var(--error); }
+    textarea { resize: vertical; min-height: 96px; line-height: 1.6; }
+    .select-wrap { position: relative; }
+    .select-wrap::after {
+      content: '▾';
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--gold);
+      pointer-events: none;
+      font-size: 14px;
+    }
+    select { cursor: pointer; padding-right: 36px; }
+    .field-error { font-size: 11px; color: var(--error); margin-top: 5px; display: none; }
+    .field-error.show { display: block; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    @media (max-width: 400px) { .row { grid-template-columns: 1fr; } }
+    .submit-wrap {
+      margin-top: 34px;
+      padding-top: 26px;
+      border-top: 1px solid var(--border);
+    }
+    .btn {
+      width: 100%;
+      background: var(--gold);
+      color: #fff;
+      border: none;
+      border-radius: 2px;
+      padding: 16px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s;
+      position: relative;
+    }
+    .btn:hover:not(:disabled) { background: #b07d20; }
+    .btn:disabled { background: var(--border); cursor: not-allowed; }
+    .spinner {
+      display: none;
+      width: 15px; height: 15px;
+      border: 2px solid rgba(255,255,255,0.35);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      position: absolute;
+      right: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    .btn.loading .spinner { display: block; }
+    @keyframes spin { to { transform: translateY(-50%) rotate(360deg); } }
+    .note { font-size: 11px; color: var(--muted); margin-top: 12px; line-height: 1.65; text-align: center; }
+    .success { display: none; text-align: center; padding: 16px 0 8px; }
+    .success-icon { font-size: 38px; color: var(--gold); margin-bottom: 14px; }
+    .success h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 10px;
+    }
+    .success p { font-size: 14px; color: var(--muted); line-height: 1.7; }
+    .footer { margin-top: 28px; font-size: 10px; color: #3a3830; letter-spacing: 0.1em; text-align: center; }
+  </style>
+</head>
+<body>
+
+  <div class="hero">
+    <div class="hero-eyebrow">Barney Fletcher Schools · Atlanta, GA</div>
+    <div class="hero-title">ATL<br><em>BarneyClass</em></div>
+    <div class="hero-sub">April 2026 Cohort Directory</div>
+    <div class="hero-rule"></div>
+  </div>
+
+  <div class="card">
+    <p class="card-intro">
+      We spent ten days in the same room. Let's not lose each other.
+      <br><br>
+      <strong>First name and email are the only required fields.</strong> Share as much or as little as you want. This directory stays within the class — no brokers, no spam, no nonsense.
+    </p>
+
+    <form id="form" novalidate>
+
+      <div class="section-label">Who You Are</div>
+
+      <div class="row">
+        <div class="field">
+          <label>First Name <span class="req">*</span></label>
+          <input type="text" id="firstName" placeholder="First" autocomplete="given-name" />
+          <div class="field-error" id="firstNameErr">Required.</div>
+        </div>
+        <div class="field">
+          <label>Last Name <span class="opt">(optional)</span></label>
+          <input type="text" id="lastName" placeholder="Last" autocomplete="family-name" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Email Address <span class="req">*</span></label>
+        <input type="email" id="email" placeholder="you@example.com" autocomplete="email" />
+        <div class="field-error" id="emailErr">A valid email is required.</div>
+      </div>
+
+      <div class="field">
+        <label>Phone Number <span class="opt">(optional)</span></label>
+        <input type="tel" id="phone" placeholder="(404) 000-0000" autocomplete="tel" />
+      </div>
+
+      <div class="section-label">Where You're Based</div>
+
+      <div class="field">
+        <label>General Location / Neighborhood <span class="opt">(optional)</span></label>
+        <input type="text" id="location" placeholder="e.g. Old Fourth Ward, Newnan, Dawsonville…" />
+      </div>
+
+      <div class="section-label">What You Bring</div>
+
+      <div class="field">
+        <label>Previous Career / Expertise / Your Edge <span class="opt">(optional)</span></label>
+        <textarea id="expertise" placeholder="Mortgage lending, construction, property management, marketing — whatever you think the group should know about you."></textarea>
+      </div>
+
+      <div class="field">
+        <label>Brokerage <span class="opt">(optional — fill in when you land)</span></label>
+        <input type="text" id="brokerage" placeholder="TBD" />
+      </div>
+
+      <div class="section-label">How to Reach You</div>
+
+      <div class="field">
+        <label>Preferred Contact Method <span class="opt">(optional)</span></label>
+        <div class="select-wrap">
+          <select id="contactMethod">
+            <option value="" disabled selected>Select one…</option>
+            <option value="Phone / Text">Phone / Text</option>
+            <option value="Email Only">Email Only</option>
+            <option value="GroupMe Only">GroupMe Only</option>
+            <option value="All of the Above">All of the Above</option>
+            <option value="I'll Reach Out When I'm Ready">I'll Reach Out When I'm Ready</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="section-label">The Jan-Marie Elder Hall of Fame</div>
+
+      <div class="field">
+        <label>Your Favorite Jan-Marie Elder-ism <span class="opt">(optional)</span></label>
+        <textarea id="elderism" placeholder="Drop your favorite quote, phrase, or moment from class. You know the ones." style="min-height:80px;"></textarea>
+      </div>
+
+      <div class="submit-wrap">
+        <button type="submit" class="btn" id="submitBtn">
+          Join the Directory
+          <span class="spinner"></span>
+        </button>
+        <p class="note">Your information is shared only with your April 2026 classmates.</p>
+      </div>
+
+    </form>
+
+    <div class="success" id="success">
+      <div class="success-icon">✦</div>
+      <h2>You're in.</h2>
+      <p>Welcome to ATL BarneyClass April 2026.<br>Keep an eye on your inbox — the full directory is coming your way.</p>
+    </div>
+  </div>
+
+  <div class="footer">ATL BarneyClass · April 2026 · Built by a classmate</div>
+
+  <script>
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwOC5PXH8-MymzpWxlpcPVNhTf2YN-C8C7IyJFRtOgytN15ALSRB5kVPRXNdux_Ds_n/exec';
+
+    const form = document.getElementById('form');
+    const btn  = document.getElementById('submitBtn');
+
+    function validate() {
+      let valid = true;
+      const fn  = document.getElementById('firstName');
+      const fne = document.getElementById('firstNameErr');
+      if (!fn.value.trim()) {
+        fn.classList.add('error'); fne.classList.add('show'); valid = false;
+      } else {
+        fn.classList.remove('error'); fne.classList.remove('show');
+      }
+      const em  = document.getElementById('email');
+      const eme = document.getElementById('emailErr');
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em.value.trim())) {
+        em.classList.add('error'); eme.classList.add('show'); valid = false;
+      } else {
+        em.classList.remove('error'); eme.classList.remove('show');
+      }
+      return valid;
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!validate()) return;
+      btn.disabled = true;
+      btn.classList.add('loading');
+      const data = {
+        timestamp:     new Date().toLocaleString('en-US', {timeZone: 'America/New_York'}),
+        firstName:     document.getElementById('firstName').value.trim(),
+        lastName:      document.getElementById('lastName').value.trim(),
+        email:         document.getElementById('email').value.trim(),
+        phone:         document.getElementById('phone').value.trim(),
+        location:      document.getElementById('location').value.trim(),
+        expertise:     document.getElementById('expertise').value.trim(),
+        brokerage:     document.getElementById('brokerage').value.trim(),
+        contactMethod: document.getElementById('contactMethod').value || 'Not specified',
+        elderism:      document.getElementById('elderism').value.trim(),
+      };
+      try {
+        await fetch(SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+        form.style.display = 'none';
+        document.getElementById('success').style.display = 'block';
+      } catch (err) {
+        alert('Something went wrong. Try again or find Todd.');
+        btn.disabled = false;
+        btn.classList.remove('loading');
+      }
+    });
+  </script>
+</body>
+</html>
